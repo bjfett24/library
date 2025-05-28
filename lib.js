@@ -75,7 +75,20 @@ function displayBooks(arr) {
         const newID = document.createElement('td');
         newID.textContent = book.id;
         newRow.appendChild(newID);
+
+        const removeBox = document.createElement('td');
+        newRow.appendChild(removeBox);
+
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.addEventListener('click', removeBookFromLibrary.bind(book.id));
+        removeBox.appendChild(removeButton);
     }
+}
+
+function removeBookFromLibrary(bookID) {
+    myLibrary.splice(myLibrary.findIndex(book => book.id === bookID), 1);
+    displayBooks(myLibrary);
 }
 
 
