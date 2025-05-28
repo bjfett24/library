@@ -19,8 +19,14 @@ function addBooktoLibrary(title, author, pages, read) {
 }
 
 function displayBooks(arr) {
+
+    container = document.querySelector('#booksTableContainer')
+
+    container.innerHTML = '';
+    
+    
     const table = document.createElement('table');
-    body.appendChild(table);
+    container.appendChild(table);
 
     const row1 = document.createElement('tr');
     table.appendChild(row1);
@@ -72,12 +78,11 @@ function displayBooks(arr) {
     }
 }
 
-function newBook() {
+
+function newBookDialog() {
     const popUp = document.createElement('dialog');
-    popUp.open;
-    //popUp.showModal();
     popUp.closedby = 'any';
-    body.appendChild(popUp);
+    document.body.appendChild(popUp);
     
     const dialogHead = document.createElement('div');
     dialogHead.textContent = 'Insert Book Information';
@@ -85,7 +90,7 @@ function newBook() {
 
     const bookForm = document.createElement('form');
     bookForm.action = '#';
-    bookForm.method = 'post';
+    bookForm.method = 'dialog';
     popUp.appendChild(bookForm);
 
     const titleLabel = document.createElement('label');
@@ -106,7 +111,7 @@ function newBook() {
     const authorInput = document.createElement('input');
     authorInput.type = 'text';
     authorInput.id = 'author';
-    bookForm.appendChild(titleInput);
+    bookForm.appendChild(authorInput);
 
     const pagesLabel = document.createElement('label');
     pagesLabel.for = 'pages';
@@ -116,10 +121,14 @@ function newBook() {
     const pagesInput = document.createElement('input');
     pagesInput.type = 'text';
     pagesInput.id = 'pages';
-    bookForm.appendChild(titleInput);
+    bookForm.appendChild(pagesInput);
+
+    const readLabel = document.createElement('label');
+    readLabel.textContent = 'Have you read this book?';
+    bookForm.appendChild(readLabel);
     
     const radioYes = document.createElement('div');
-    radioYes.class = 'radio-option';
+    radioYes.classList.add('radio-option');
     bookForm.appendChild(radioYes);
     
     
@@ -135,7 +144,7 @@ function newBook() {
 
     
     const radioNo = document.createElement('div');
-    radioNo.class = 'radio-option';
+    radioNo.classList.add('radio-option');
     bookForm.appendChild(radioNo);
 
     const radioFalseLabel = document.createElement('label');
@@ -151,9 +160,22 @@ function newBook() {
 
     const doneButton = document.createElement('button');
     doneButton.type = 'submit';
-    doneButton.class = 'doneButton';
+    doneButton.classList.add('doneButton')
     doneButton.textContent = 'Done';
     bookForm.appendChild(doneButton);
+
+    bookForm.addEventListener('submit', () => {
+        const title = titleInput.value;
+        const author = authorInput.value;
+        const pages = +pagesInput.value;
+        const read = radioTrueInput.checked;
+
+        addBooktoLibrary(title, author, pages, read);
+        displayBooks(myLibrary);
+        popUp.close();
+    })
+
+    popUp.showModal();
 
 
 
@@ -163,12 +185,14 @@ function newBook() {
     
 }
 
-const body = document.querySelector('body');
+const tableContainer = document.createElement('div');
+    tableContainer.id = 'booksTableContainer';
+    document.body.appendChild(tableContainer);
 
 const newBookButton = document.createElement('button');
-newBookButton.addEventListener('click', newBook);
+newBookButton.addEventListener('click', newBookDialog);
 newBookButton.textContent = 'Add Book'
-body.appendChild(newBookButton);
+document.body.appendChild(newBookButton);
 
 
 
