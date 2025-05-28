@@ -1,3 +1,61 @@
 table, td, th {
     border: 1px solid black;
 }
+
+.dialogContainer {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.dialogHead {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.bookForm {
+    display: grid;
+    grid-template: repeat(5, 1fr) / 1fr 2fr;
+    gap: 1rem;
+
+}
+
+.title {
+    grid-row: 1 / 2;
+}
+
+.author {
+    grid-row: 2 / 3;
+}
+
+.pages {
+    grid-row: 3 / 4;
+}
+
+.read.label {
+    grid-row: 4 / 5;
+}
+
+.radioOptionContainer {
+    grid-row: 4 / 5;
+    grid-column: 2 / 3;
+    justify-items: center;
+}
+
+.radio-option {
+    display: inline-block;
+}
+
+.label {
+    grid-column: 1 / 2;
+}
+
+.input {
+    grid-column: 2 / 3;
+}
+
+.doneButton {
+    grid-row: 5 / 6;
+    grid-column: 1 / 2;
+}
