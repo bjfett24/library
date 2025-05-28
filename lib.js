@@ -19,7 +19,6 @@ function addBooktoLibrary(title, author, pages, read) {
 }
 
 function displayBooks(arr) {
-    const body = document.querySelector('body');
     const table = document.createElement('table');
     body.appendChild(table);
 
@@ -72,6 +71,106 @@ function displayBooks(arr) {
         newRow.appendChild(newID);
     }
 }
+
+function newBook() {
+    const popUp = document.createElement('dialog');
+    popUp.open;
+    //popUp.showModal();
+    popUp.closedby = 'any';
+    body.appendChild(popUp);
+    
+    const dialogHead = document.createElement('div');
+    dialogHead.textContent = 'Insert Book Information';
+    popUp.appendChild(dialogHead);
+
+    const bookForm = document.createElement('form');
+    bookForm.action = '#';
+    bookForm.method = 'post';
+    popUp.appendChild(bookForm);
+
+    const titleLabel = document.createElement('label');
+    titleLabel.for = 'title';
+    titleLabel.textContent = 'Book Title';
+    bookForm.appendChild(titleLabel);
+
+    const titleInput = document.createElement('input');
+    titleInput.type = 'text';
+    titleInput.id = 'title';
+    bookForm.appendChild(titleInput);
+
+    const authorLabel = document.createElement('label');
+    authorLabel.for = 'author';
+    authorLabel.textContent = 'Author';
+    bookForm.appendChild(authorLabel);
+
+    const authorInput = document.createElement('input');
+    authorInput.type = 'text';
+    authorInput.id = 'author';
+    bookForm.appendChild(titleInput);
+
+    const pagesLabel = document.createElement('label');
+    pagesLabel.for = 'pages';
+    pagesLabel.textContent = 'Number of Pages';
+    bookForm.appendChild(pagesLabel);
+
+    const pagesInput = document.createElement('input');
+    pagesInput.type = 'text';
+    pagesInput.id = 'pages';
+    bookForm.appendChild(titleInput);
+    
+    const radioYes = document.createElement('div');
+    radioYes.class = 'radio-option';
+    bookForm.appendChild(radioYes);
+    
+    
+    const radioTrueLabel = document.createElement('label');
+    radioTrueLabel.for = 'readTrue';
+    radioTrueLabel.textContent = 'Yes';
+    radioYes.appendChild(radioTrueLabel);
+
+    const radioTrueInput = document.createElement('input');
+    radioTrueInput.type = 'radio';
+    radioTrueInput.id = 'readTrue';
+    radioYes.appendChild(radioTrueInput);
+
+    
+    const radioNo = document.createElement('div');
+    radioNo.class = 'radio-option';
+    bookForm.appendChild(radioNo);
+
+    const radioFalseLabel = document.createElement('label');
+    radioFalseLabel.for = 'readFalse';
+    radioFalseLabel.textContent = 'No';
+    radioNo.appendChild(radioFalseLabel);
+
+    const radioFalseInput = document.createElement('input');
+    radioFalseInput.type = 'radio';
+    radioFalseInput.id = 'readFalse';
+    radioNo.appendChild(radioFalseInput);
+
+
+    const doneButton = document.createElement('button');
+    doneButton.type = 'submit';
+    doneButton.class = 'doneButton';
+    doneButton.textContent = 'Done';
+    bookForm.appendChild(doneButton);
+
+
+
+
+
+
+    
+}
+
+const body = document.querySelector('body');
+
+const newBookButton = document.createElement('button');
+newBookButton.addEventListener('click', newBook);
+newBookButton.textContent = 'Add Book'
+body.appendChild(newBookButton);
+
+
 
 
 addBooktoLibrary("Star Wars", "George Lucas", 346, false);
