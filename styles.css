@@ -1,3 +1,10 @@
+:root, body {
+    margin: 0px;
+    padding: 0px;
+    height: 100vh;
+    font-family:Arial, Helvetica, sans-serif
+}
+
 table, td, th {
     border: 1px solid black;
 }
@@ -58,4 +65,111 @@ table, td, th {
 .doneButton {
     grid-row: 5 / 6;
     grid-column: 1 / 2;
+}
+
+
+#booksTableContainer {
+    display: flex;
+    justify-content: center;
+}
+
+body {
+    display: flex;
+    background-color: rgb(147, 147, 186);
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    justify-content: center;
+}
+
+td {
+    background-color: aliceblue;
+}
+
+.table {
+    background-color: rgb(244, 246, 166);
+    font-size: 1.5rem;
+    padding: 0.75rem;
+    border-radius: 15px;
+}
+
+th {
+    background-color: rgb(239, 181, 87);
+    color: white;
+}
+
+td, th {
+    padding: 0.25rem;
+    border-radius: 5px;
+}
+
+.newRead {
+    display: flex;
+    justify-content: center;
+}
+
+.readStatusButton {
+    color: white;
+    border: 1px solid rgba(0, 0, 0, 0.076);
+    border-radius: 5px;
+    width: 100%;
+    font-size: 1.5rem;
+}
+
+.removeBox {
+    background-color: rgba(239, 232, 133, 0.246);
+    border: none;
+}
+
+.removeButton {
+    border: 1px solid rgb(255, 255, 255);
+    background-color: black;
+    border-radius: 8px;
+    color: white;
+    font-size: 1.5rem;
+}
+
+button:hover {
+    color: rgb(236, 0, 138);
+}
+
+.readStatusButton:hover {
+    color: black;
+}
+
+.newBookButton {
+    font-size: 2rem;
+    border-radius: 20px;
+    padding: 1rem;
+    background-color: rgb(0, 170, 255);
+    color: white;
+    border: none;
+    box-shadow: 2px 5px 5px 0px rgb(0, 0, 0, 0.15);
+}
+
+.newBookButton:hover {
+    box-shadow: 4px 8px 15px 0px rgb(0, 0, 0, 0.15);
+}
+
+.noBookMessage {
+    background-color: blueviolet;
+    color: white;
+    padding: 2rem;
+    font-size: 2rem;
+    border: 3px solid rgb(99, 30, 163);
+    border-radius: 30px;
+}
+
+.popUp {
+    border-radius: 20px;
+    background-color: black;
+    color: white;
+
+}
+
+.doneButton {
+    background-color: rgb(0, 170, 255);
+    border: 2px solid white;
+    border-radius: 10px;
+    color: white;
 }

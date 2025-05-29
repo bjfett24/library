@@ -30,75 +30,93 @@ function displayBooks() {
     container = document.querySelector('#booksTableContainer')
 
     container.innerHTML = '';
-    
-    
-    const table = document.createElement('table');
-    container.appendChild(table);
 
-    const row1 = document.createElement('tr');
-    table.appendChild(row1);
+    if (myLibrary.length === 0) {
+        const noBookMessage = document.createElement('div');
+        noBookMessage.classList.add('noBookMessage');
+        noBookMessage.textContent = 'You have no bookes in your library. Click the button to add one!';
+        container.appendChild(noBookMessage);
+    } else {
     
-    const titleHead = document.createElement('th');
-    titleHead.textContent = 'Title'
-    row1.appendChild(titleHead);
     
-    const authorHead = document.createElement('th');
-    authorHead.textContent = 'Author'
-    row1.appendChild(authorHead);
-    
-    const pagesHead = document.createElement('th');
-    pagesHead.textContent = 'Pages'
-    row1.appendChild(pagesHead);
-    
-    const readHead = document.createElement('th');
-    readHead.textContent = 'Read?'
-    row1.appendChild(readHead);
-    
-    const idHead = document.createElement('th');
-    idHead.textContent = 'Book ID'
-    row1.appendChild(idHead);
+        const table = document.createElement('table');
+        table.classList.add('table');
+        container.appendChild(table);
 
-    
-    for (let book of myLibrary) {
-        const newRow = document.createElement('tr');
-        table.appendChild(newRow);
+        const row1 = document.createElement('tr');
+        table.appendChild(row1);
         
-        const newTitle = document.createElement('td');
-        newTitle.textContent = book.title;
-        newRow.appendChild(newTitle);
+        const titleHead = document.createElement('th');
+        titleHead.textContent = 'Title'
+        row1.appendChild(titleHead);
+        
+        const authorHead = document.createElement('th');
+        authorHead.textContent = 'Author'
+        row1.appendChild(authorHead);
+        
+        const pagesHead = document.createElement('th');
+        pagesHead.textContent = 'Pages'
+        row1.appendChild(pagesHead);
+        
+        const readHead = document.createElement('th');
+        readHead.textContent = 'Read?'
+        row1.appendChild(readHead);
+        
+        const idHead = document.createElement('th');
+        idHead.textContent = 'Book ID'
+        row1.appendChild(idHead);
 
-        const newAuthor = document.createElement('td');
-        newAuthor.textContent = book.author;
-        newRow.appendChild(newAuthor);
+        
+        for (let book of myLibrary) {
+            const newRow = document.createElement('tr');
+            table.appendChild(newRow);
+            
+            const newTitle = document.createElement('td');
+            newTitle.textContent = book.title;
+            newRow.appendChild(newTitle);
 
-        const newPages = document.createElement('td');
-        newPages.textContent = book.pages;
-        newRow.appendChild(newPages);
+            const newAuthor = document.createElement('td');
+            newAuthor.textContent = book.author;
+            newRow.appendChild(newAuthor);
 
-        const newRead = document.createElement('td');
-        //newRead.textContent = book.read;
-        newRow.appendChild(newRead);
+            const newPages = document.createElement('td');
+            newPages.textContent = book.pages;
+            newRow.appendChild(newPages);
 
-        const readStatusButton = document.createElement('button');
-        (book.read)? readStatusButton.textContent = 'Yes': readStatusButton.textContent = 'No';
-        readStatusButton.addEventListener('click', () => {
-            book.toggleReadStatus();
-            displayBooks();
-        })
-        newRead.appendChild(readStatusButton);
+            const newRead = document.createElement('td');
+            newRead.classList.add('newRead');
+            //newRead.textContent = book.read;
+            newRow.appendChild(newRead);
 
-        const newID = document.createElement('td');
-        newID.textContent = book.id;
-        newRow.appendChild(newID);
+            const readStatusButton = document.createElement('button');
+            readStatusButton.classList.add('readStatusButton');
+            if (book.read) {
+                readStatusButton.textContent = 'Yes';
+                readStatusButton.style.backgroundColor = 'green';
+            } else {
+                readStatusButton.textContent = 'No';
+                readStatusButton.style.backgroundColor = 'red';
+            }
+            readStatusButton.addEventListener('click', () => {
+                book.toggleReadStatus();
+                displayBooks();
+            })
+            newRead.appendChild(readStatusButton);
 
-        const removeBox = document.createElement('td');
-        newRow.appendChild(removeBox);
+            const newID = document.createElement('td');
+            newID.textContent = book.id;
+            newRow.appendChild(newID);
 
-        const removeButton = document.createElement('button');
-        removeButton.textContent = 'Remove';
-        removeButton.addEventListener('click', removeBookFromLibrary.bind(book.id));
-        removeBox.appendChild(removeButton);
-    }
+            const removeBox = document.createElement('td');
+            removeBox.classList.add('removeBox');
+            newRow.appendChild(removeBox);
+
+            const removeButton = document.createElement('button');
+            removeButton.classList.add('removeButton');
+            removeButton.textContent = 'Remove';
+            removeButton.addEventListener('click', removeBookFromLibrary.bind(book.id));
+            removeBox.appendChild(removeButton);
+        }}
 }
 
 function removeBookFromLibrary(bookID) {
@@ -217,9 +235,24 @@ function newBookDialog() {
         const pages = +pagesInput.value;
         const read = radioTrueInput.checked;
 
-        addBooktoLibrary(title, author, pages, read);
-        displayBooks();
-        popUp.close();
+        if (title && author && !isNaN(pages) && pages > 0) {
+            addBooktoLibrary(title, author, pages, read);
+            displayBooks(); // Re-display the updated table
+            popUp.close(); // Close the dialog
+        } else {
+            const messageBox = document.createElement('div');
+            messageBox.style.cssText = `
+                position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+                background-color: #ffdddd; color: #d8000c; padding: 10px 20px;
+                border: 1px solid #d8000c; border-radius: 5px; z-index: 1001;
+                font-family: sans-serif;
+            `;
+            messageBox.textContent = 'Please fill in all fields correctly (Pages must be a positive number).';
+            document.body.appendChild(messageBox);
+            setTimeout(() => {
+                messageBox.remove();
+            }, 3000); // Remove after 3 seconds
+        }
     })
 
     popUp.showModal();
@@ -241,14 +274,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(tableContainer);
 
     const newBookButton = document.createElement('button');
+    newBookButton.classList.add('newBookButton');
     newBookButton.addEventListener('click', newBookDialog);
     newBookButton.textContent = 'Add Book'
     document.body.appendChild(newBookButton);
 
-    // Initial display of books
+    /*Initial display of books
     addBooktoLibrary("Star Wars", "George Lucas", 346, false);
     addBooktoLibrary("The Hobbit", "J.R.R. Tolkein", 478, true);
-    addBooktoLibrary("The Long Ships", "Frans Berggston", 503, true);
+    addBooktoLibrary("The Long Ships", "Frans Berggston", 503, true);*/
 
     displayBooks(); // Corrected: Call without argument
 });
